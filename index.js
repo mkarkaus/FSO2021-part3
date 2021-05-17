@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+const morgan = require('morgan')
 
 let persons = [
 	{
@@ -25,6 +26,7 @@ let persons = [
 ]
 
 app.use(express.json())
+app.use(morgan('tiny'))
 
 app.get('/api/persons', (request, response) => {
 	response.json(persons)
@@ -82,6 +84,12 @@ app.get('/info', (request, response) => {
 
 	response.send(infoFor + date)
 })
+
+const unknownEndpoint = (request, response) => {
+	response.status(404).send({ error: 'unknown endpoint' })
+}
+
+app.use(unknownEndpoint)
 
 const PORT = 3001
 app.listen(PORT)
