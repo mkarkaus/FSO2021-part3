@@ -1,0 +1,27 @@
+{
+  "name": "fso2021-part3",
+  "version": "1.0.0",
+  "description": "Part3 of the Full Stack open 2021 of University of Helsinki.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mkarkaus/FSO2021-part3.git"
+  },
+  "author": "Miikka Karkaus",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mkarkaus/FSO2021-part3/issues"
+  },
+  "homepage": "https://github.com/mkarkaus/FSO2021-part3#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
