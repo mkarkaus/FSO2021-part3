@@ -94,6 +94,7 @@ const unknownEndpoint = (request, response) => {
 	response.status(404).send({ error: 'unknown endpoint' })
 }
 
+app.use(express.static('build'))
 app.use(unknownEndpoint)
 
 const PORT = process.env.PORT || 3001
