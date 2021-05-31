@@ -57,11 +57,15 @@ app.delete('/api/persons/:id', (request, response, next) => {
 		.catch(error => next(error))
 })
 
-app.get('/info', (request, response) => {
-	const infoFor = '<p>Phonebook has info for ' + Person.length + ' people</p>'
-	const date = '<p>' + new Date + '</p>'
-
-	response.send(infoFor + date)
+app.get('/info', (request, response, next) => {
+	Person.find()
+		.then(person => {
+			const infoFor = '<p>Phonebook has info for ' + person.length + ' people</p>'
+			const date = '<p>' + new Date + '</p>'
+		
+			response.send(infoFor + date)
+		})
+		.catch(error => next(error))
 })
 
 const errorHandler = (error, request, response, next) => {
