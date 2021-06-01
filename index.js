@@ -37,16 +37,16 @@ app.post('/api/persons', (request, response, next) => {
 	}
 })
 
-app.put('/api/persons/:id', (request, response) => {
+app.put('/api/persons/:id', (request, response, next) => {
 	const body = request.body
 	const person = { number: body.number }
 
-	Person.findByIdAndUpdate(request.params.id, person, { new: true })
+	Person.findByIdAndUpdate(request.params.id, person, { new: true, runValidators: true })
 		.then(updatedPerson => response.json(updatedPerson))
 		.catch(error => next(error))
 })
 
-app.get('/api/persons/:id', (request, response) => {
+app.get('/api/persons/:id', (request, response, next) => {
 	Person.findById(request.params.id)
 		.then(person => response.json(person))
 		.catch(error => next(error))

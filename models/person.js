@@ -14,8 +14,8 @@ mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useFind
 	})
 
 const personSchema = new mongoose.Schema({
-	name: { type: String, required: true, minLength: 1, unique: true },
-	number: { type: String, required: true, minLength: 1 }
+	name: { type: String, minLength: [3, 'Name has to be at least 3 characters long'], unique: [true, 'Name already exists'] },
+	number: { type: String, minLength: [8, 'Number has to be at least 8 characters long'] }
 })
 
 personSchema.plugin(uniqueValidator)
