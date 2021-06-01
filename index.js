@@ -7,7 +7,7 @@ const Person = require('./models/person')
 app.use(express.static('build'))
 app.use(express.json())
 
-morgan.token('body', function(req, res) {
+morgan.token('body', function(req) {
 	return JSON.stringify(req.body)
 })
 
@@ -40,15 +40,15 @@ app.put('/api/persons/:id', (request, response, next) => {
 
 	Person.updateOne({ _id: request.params.id }, person, { new: true, runValidators: true })
 		.then(updatedPerson => {
-				if (updatedPerson.nModified)
-					response.json(updatedPerson)
-				else
-				{
-					let error = new Error('That person has already been deleted')
-					error.name = 'Deleted'
-					throw error
-				}
-			})
+			if (updatedPerson.nModified)
+				response.json(updatedPerson)
+			else
+			{
+				let error = new Error('That person has already been deleted')
+				error.name = 'Deleted'
+				throw error
+			}
+		})
 		.catch(error => next(error))
 })
 
@@ -69,7 +69,7 @@ app.get('/info', (request, response, next) => {
 		.then(person => {
 			const infoFor = '<p>Phonebook has info for ' + person.length + ' people</p>'
 			const date = '<p>' + new Date + '</p>'
-		
+
 			response.send(infoFor + date)
 		})
 		.catch(error => next(error))
@@ -81,7 +81,7 @@ const errorHandler = (error, request, response, next) => {
 	if (error.name === 'CastError')
 		return response.status(400).send({ error: 'malformatted id' })
 	else if (error.name === 'ValidationError')
-			return response.status(400).json({ error: error.message })
+		return response.status(400).json({ error: error.message })
 	else if (error.name === 'Deleted')
 		return response.status(404).send({ error: error.message })
 	next(error)
